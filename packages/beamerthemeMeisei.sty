@@ -1,0 +1,295 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    © 2025 NOMOTO Keiichiro All Rights Reserved.             %
+%                                                             %
+%    Filename     : beamerthemeMeisei.sty                     %
+%    Author       : NOMOTO Keiichiro                          %
+%    Created      : 2025/02/09                                %
+%    Last Updated : 2025/02/09                                %
+%                                                             %
+%    Description:                                             %
+%    This file defines the Meisei-style Beamer theme.         %
+%    It customizes various design elements such as the        %
+%    headline, footline, title page, and section pages.       %
+%                                                             %
+%    License:                                                 %
+%    This file may be distributed and/or modified             %
+%    1. under the LaTeX Project Public License and/or         %
+%    2. under the GNU Public License.                         %
+%    See the file beamer/doc/licenses for more details.       %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    Packages                                                 %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tikz}
+\usepackage{luatexja}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    Define Colors                                            %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---- MeiseiRed is compliant with the design manual
+\definecolor{MeiseiRed}{cmyk}{0.65, 1.00, 1.00, 0}
+
+\definecolor{MeiseiBlue}{HTML}{004182}
+\definecolor{MeiseiGreen}{HTML}{008241}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    8.2.1 - Headline and Footline                            %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{headline}{
+  \begin{tikzpicture}[remember picture, overlay]
+
+    % ---- Header's color
+    \fill[MeiseiRed] (current page.north west) rectangle 
+    ([yshift=-0.8cm]current page.north east);
+
+    % ---- Logo
+    \node[anchor=center, inner sep=0pt, scale=0.7]
+    at ([xshift=-1.6cm, yshift=-0.4cm]current page.north east)
+    {\insertlogo};
+
+  \end{tikzpicture}
+}
+
+\setbeamertemplate{footline}{
+  \begin{tikzpicture}[remember picture, overlay]
+
+    % ---- Footer's color
+    \fill[MeiseiRed] (current page.south west) rectangle
+    ([yshift=0.4cm]current page.south east);
+
+    % ---- Frame number
+    \node[anchor=east, scale=1.4]
+    at ([xshift=-0.1cm, yshift=0.20cm]current page.south east)
+    {\insertframenumber\, / \inserttotalframenumber};
+
+  \end{tikzpicture}
+}
+\setbeamercolor{footline}{fg=white}
+\setbeamerfont{footline}{series=\mdseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    8.2.4 - The Navigation Symbols                           %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---- Remove the navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    8.2.5 - The Logo                                         %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\logo{\includegraphics[height=1cm]{images/logo.png}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    8.2.6 - The Frame Title                                  %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{frametitle}{
+  \begin{tikzpicture}[remember picture, overlay]
+
+    % ---- Frame title
+    \node[anchor=west]
+    at ([xshift=0.1cm, yshift=-0.4cm]current page.north west)
+    {\insertframetitle};
+
+  \end{tikzpicture}
+}
+\setbeamercolor{frametitle}{fg=white}
+\setbeamerfont{frametitle}{size=\Large, family=\gtfamily}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    8.3 - Frame and Margin Sizes                             %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamersize{
+  text margin left=2\zw,
+  text margin right=2\zw,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    10.1 - Adding a Title Page                               %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{title page}{
+    
+    \vspace{1.5cm}
+
+    \begin{flushleft}
+      
+      % ---- Title
+      {\usebeamerfont{title}\inserttitle \par}
+      \smallskip
+
+      % ---- Subtitle
+      {\usebeamerfont{subtitle}\insertsubtitle}
+
+    \end{flushleft}
+    
+    \vspace{-0.5cm}
+
+    % ---- Draw the red line
+    \textcolor{MeiseiRed}{\rule{\linewidth}{0.02cm}}
+
+    \vspace{0.5cm}
+    
+    \begin{center}
+
+      % ---- Author
+      {\usebeamerfont{author}\insertauthor\par}
+      \smallskip
+
+      % ---- Institue
+      {\usebeamerfont{institute}\insertinstitute}
+      \smallskip
+
+      % ---- Date
+      {\usebeamerfont{date}\insertdate\par}
+
+    \end{center}
+
+}
+\setbeamerfont{title}{size=\LARGE, shape=\slshape, series=\bfseries, family=\gtfamily}
+\setbeamerfont{subtitle}{size=\Large, shape=\itshape, series=\mdseries, family=\gtfamily}
+\setbeamerfont{author}{size=\normalsize, series=\mdseries, family=\ttfamily}
+\setbeamerfont{institute}{size=\small, series=\mdseries, family=\ttfamily}
+\setbeamerfont{date}{size=\footnotesize, series=\mdseries, family=\ttfamily}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    10.2 - Adding Sections and Subsections                   %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtBeginSection[]{
+  \begin{frame}
+    
+    \vspace*{\fill}
+
+    \begin{center}
+
+      % ---- Section name
+      {\usebeamerfont{section title}\insertsection\par}
+
+      \vspace{-0.18cm}
+
+      % ---- Draw the red line
+      \textcolor{MeiseiRed}{\rule{\linewidth}{0.02cm}}
+      
+    \end{center}
+
+    \vspace*{\fill}
+
+  \end{frame}
+}
+\setbeamerfont{section title}{size=\Large, shape=\slshape, series=\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    12.1 - Itemizations, Enumerations, and Descriptions      %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---- Item symbol
+\setbeamertemplate{itemize item}{
+  \tikz[baseline=0.03cm]
+  \fill[black] (0,0) rectangle (0.35, 0.35);
+}
+\setbeamercolor{enumerate item}{fg=black}
+
+% ---- Subitem symbol
+\setbeamertemplate{itemize subitem}{
+  \tikz \fill[black] (0,0) rectangle (0.15, 0.15);
+}
+\setbeamercolor{enumerate subitem}{fg=black}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    12.2 - Highlighting                                      %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamercolor{normal text}{fg=black}
+
+\setbeamercolor{structure}{fg=MeiseiBlue}
+
+\setbeamercolor{alerted text}{fg=MeiseiRed}
+\setbeamerfont{alerted text}{series=\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    12.3 - Block Environments                                %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---- Applied to the theorem style specified to "definition"
+\setbeamertemplate{blocks}[round]
+\setbeamercolor{block title}{fg=white,bg=MeiseiBlue!85!white}
+\setbeamercolor{block body}{bg=block title.bg!10!bg}
+
+% ---- Applied to the theorem style specified to "example"
+\setbeamercolor{block title example}{fg=white,bg=MeiseiGreen!85!white}
+\setbeamercolor{block body example}{bg=block title example.bg!10!bg}
+
+% ---- Not applied to any theorem style
+\setbeamercolor{block title alerted}{fg=white,bg=MeiseiRed!85!white}
+\setbeamercolor{block body alerted}{bg=block title alerted.bg!10!bg}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    12.4 - Theorem Environments                              %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---- Output by the block environment
+\theoremstyle{definition}
+\newtheorem{defi}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+
+% ---- Output by the  example block environment
+\theoremstyle{example}
+\newtheorem{ex}{Example}
+\newtheorem{lem}{Lemma}
+\newtheorem{prop}{Proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    12.6 - Figures and Tables                                %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---- Change [Figure ***」 in the caption to「***」
+\setbeamertemplate{caption}{\insertcaption}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+%    18 - Fonts                                               %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usefonttheme{professionalfonts}
+\usefonttheme{structurebold}
